@@ -32,8 +32,8 @@ const signup = async (req, res, next) => {
         user: {
           email: newUser.email,
           name: newUser.name,
-          message: `Please, verify your E-mail`,
         },
+        message: `Please, verify your E-mail`,
       },
     });
   } catch (error) {
