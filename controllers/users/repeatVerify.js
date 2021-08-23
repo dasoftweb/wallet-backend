@@ -1,7 +1,9 @@
 const { user: service } = require('../../services');
 const { nanoid } = require('nanoid');
-require('dotenv').config();
 const { sendMail } = require('../../utils');
+require('dotenv').config();
+
+const { BACKEND_URL } = process.env;
 
 const repeatVerify = async (req, res, next) => {
   const { email } = req.body;
@@ -39,9 +41,9 @@ const repeatVerify = async (req, res, next) => {
       to: email,
       subject: 'Verify your E-mail',
       html: `<h3>Hello,</h3>
-      <p>You have requested new E-mail verification, to finish your registation you need to verify your e-mail address</p>
-      <center><a href="http://localhost:3000/api/v1/users/verify/${verifyToken}">
-      <h3>Verify my email</h3></a></center><hr><h4>Kind regeards, Service Team</h4>`,
+      <p>to finish your registration you need to verify your e-mail address</p>
+      <center><a href="${BACKEND_URL}/api/v1/users/verify/${verifyToken}">
+      <h3>Verify my email</h3></a></center><hr><h4>Kind regards, Service Team</h4>`,
     };
 
     await sendMail(message);

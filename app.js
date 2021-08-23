@@ -17,8 +17,8 @@ require('./configs/passport-config')
 const authRouter = require('./routes/api/users')
 app.use('/api/v1/users', authRouter)
 
-const contactsRouter = require('./routes/api/contacts')
-app.use('/api/v1/contacts', contactsRouter)
+const transactionsRouter = require('./routes/api/transactions')
+app.use('/api/v1/transactions', transactionsRouter)
 
 app.use((req, res) => {
   res.status(404).json({ status: 'error', code: 404, message: 'Not found' })

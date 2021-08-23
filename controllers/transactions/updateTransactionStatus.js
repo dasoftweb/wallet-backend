@@ -1,11 +1,11 @@
-const { contact: service } = require('../../services');
+const { transaction: service } = require('../../services');
 
-const updateContactStatus = async (req, res, next) => {
-  const { contactId } = req.params;
+const updateTransactionStatus = async (req, res, next) => {
+  const { transactionId } = req.params;
   const userId = req.user.id;
   const { favorite = false } = req.body;
   try {
-    const result = await service.updateContactStatus(userId, contactId, { favorite });
+    const result = await service.updateTransactionStatus(userId, transactionId, { favorite });
 
     if (req.body.favorite == null) {
       return res.status(400).json({
@@ -32,4 +32,4 @@ const updateContactStatus = async (req, res, next) => {
   }
 };
 
-module.exports = updateContactStatus;
+module.exports = updateTransactionStatus;

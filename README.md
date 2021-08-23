@@ -41,9 +41,9 @@ Respose:
     "data": {
         "user": {
             "email": "XXX@XXX.XXX",
-            "name": "XXX",
-            "message": "Please, verify your E-mail"
-        }
+            "name": "XXX"
+        },
+        "message": "Please, verify your E-mail"
     }
 }
 ```

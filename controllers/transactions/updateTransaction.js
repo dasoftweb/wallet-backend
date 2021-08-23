@@ -1,10 +1,10 @@
-const { contact: service } = require('../../services');
+const { transaction: service } = require('../../services');
 
-const updateContact = async (req, res, next) => {
-  const { contactId } = req.params;
+const updateTransaction = async (req, res, next) => {
+  const { transactionId } = req.params;
   const userId = req.user.id;
   try {
-    const result = await service.updateContact(userId, contactId, { ...req.body });
+    const result = await service.updateTransaction(userId, transactionId, { ...req.body });
     if (Object.keys(req.body).length === 0) {
       return res.status(400).json({
         status: 'error',
@@ -30,4 +30,4 @@ const updateContact = async (req, res, next) => {
   }
 };
 
-module.exports = updateContact;
+module.exports = updateTransaction;

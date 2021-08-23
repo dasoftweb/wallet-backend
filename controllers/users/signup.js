@@ -1,6 +1,9 @@
-const { nanoid } = require('nanoid');
 const { user: service } = require('../../services');
+const { nanoid } = require('nanoid');
 const { sendMail } = require('../../utils');
+require('dotenv').config();
+
+const { BACKEND_URL } = process.env;
 
 const signup = async (req, res, next) => {
   const { email, password, name } = req.body;
@@ -15,14 +18,19 @@ const signup = async (req, res, next) => {
       return;
     }
     const verifyToken = nanoid();
-    const newUser = await service.addUser({ email, password, name, verifyToken });
+    const newUser = await service.addUser({
+      email,
+      password,
+      name,
+      verifyToken,
+    });
     const message = {
       to: email,
       subject: 'Verify your E-mail',
-      html: `<h3>Hello,</h3>
-      <p>to finish your registation you need to verify your e-mail address</p>
-      <center><a href="http://localhost:3000/api/v1/users/verify/${verifyToken}">
-      <h3>Verify my email</h3></a></center><hr><h4>Kind regeards, Service Team</h4>`,
+      html: `<h3>Hello, ${name}</h3>
+      <p>to finish your registration you need to verify your e-mail address</p>
+      <center><a href="${BACKEND_URL}/api/v1/users/verify/${verifyToken}">
+      <h3>Verify my email</h3></a></center><hr><h4>Kind regards, Service Team</h4>`,
     };
     await sendMail(message);
     res.status(201).json({

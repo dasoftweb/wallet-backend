@@ -1,10 +1,10 @@
-const { contact: service } = require('../../services');
+const { transaction: service } = require('../../services');
 
-const getContactById = async (req, res, next) => {
-  const { contactId } = req.params;
+const getTransactionById = async (req, res, next) => {
+  const { transactionId } = req.params;
   const userId = req.user.id;
   try {
-    const result = await service.getContactById(userId, contactId);
+    const result = await service.getTransactionById(userId, TransactionId);
     if (!result) {
       return await res.status(404).json({
         status: 'error',
@@ -24,4 +24,4 @@ const getContactById = async (req, res, next) => {
   }
 };
 
-module.exports = getContactById;
+module.exports = getTransactionById;

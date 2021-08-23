@@ -1,10 +1,10 @@
-const { contact: service } = require('../../services');
+const { transaction: service } = require('../../services');
 
-const addContact = async (req, res, next) => {
+const addTransaction = async (req, res, next) => {
   const { body } = req;
   const userId = req.user.id;
   try {
-    const result = await service.addContact({ ...body, owner: userId });
+    const result = await service.addTransaction({ ...body, owner: userId });
     if (!result) {
       res.status(400).json({
         status: 'error',
@@ -22,4 +22,4 @@ const addContact = async (req, res, next) => {
   }
 };
 
-module.exports = addContact;
+module.exports = addTransaction;
