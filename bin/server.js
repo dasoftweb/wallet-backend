@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 dotenv.config();
 
-const { DB_HOST, PORT = 3000 } = process.env;
+const { DB_HOST, PORT = 80 } = process.env;
 
 app.listen(PORT, () => {
   console.log(`Server running. Use our API on port: ${PORT}`);
