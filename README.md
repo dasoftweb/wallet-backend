@@ -90,7 +90,7 @@ Respose:
 Respose:
 ```
 {"status":"success","code":200,"message":"Verification successful"}
-
+```
 ## POST - /api/v1/users/verify
 Request:
 ```
