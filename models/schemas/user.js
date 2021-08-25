@@ -2,7 +2,7 @@ const { Schema } = require('mongoose');
 
 const bcrypt = require('bcryptjs');
 
-const userShema = Schema(
+const userSchema = Schema(
   {
     password: {
       type: String,
@@ -39,12 +39,12 @@ const userShema = Schema(
   { versionKey: false, timestamps: true },
 );
 
-userShema.methods.setPassword = function (password) {
+userSchema.methods.setPassword = function (password) {
   this.password = bcrypt.hashSync(password, bcrypt.genSaltSync(10));
 };
 
-userShema.methods.comparePassword = function (password) {
+userSchema.methods.comparePassword = function (password) {
   return bcrypt.compareSync(password, this.password);
 };
 
-module.exports = userShema;
+module.exports = userSchema;
