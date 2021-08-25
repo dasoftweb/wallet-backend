@@ -8,7 +8,7 @@ router.post('/signup', express.json(), ctrl.signup);
 
 router.post('/login', express.json(), ctrl.login);
 
-router.get('/logout', authenticate, ctrl.logout);
+router.post('/logout', authenticate, ctrl.logout);
 
 router.get('/current', express.json(), authenticate, ctrl.getCurrentUser);
 
