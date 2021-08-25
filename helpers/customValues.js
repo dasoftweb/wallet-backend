@@ -1,6 +1,6 @@
 const paginationLabels = {
   totalDocs: 'total',
-  docs: 'contacts',
+  docs: 'transactions',
   limit: 'perPage',
   page: 'currentPage',
   nextPage: 'next',
