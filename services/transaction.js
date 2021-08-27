@@ -1,9 +1,33 @@
 const { Transaction } = require('../models');
+const { User } = require('../models');
+const { Category } = require('../models');
 const { paginationLabels } = require('../helpers');
-const mongoose = require('mongoose');
 
-const addTransaction = newTransaction => {
-  return Transaction.create(newTransaction);
+const addTransaction = async newTransaction => {
+  const { owner, type, amount } = newTransaction;
+  const user = await User.findOne({ _id: owner });
+  let incom;
+  let outcome;
+  let userbalance;
+
+  if (type === '+') {
+    incom = user.incom + Number(amount);
+    incom = user.incom;
+    userbalance = user.balance + Number(amount);
+  }
+  if (type === '-') {
+    incom = user.incom;
+    outcome = user.outcome;
+    userbalance = user.balance - Number(amount);
+  }
+
+  await User.findByIdAndUpdate(owner, {
+    incom: incom,
+    outcome: outcome,
+    balance: userbalance,
+  });
+
+  return Transaction.create({ ...newTransaction, balanceAfter: userbalance });
 };
 
 const listTransactions = (userId, query) => {
@@ -49,24 +73,9 @@ const updateTransaction = (userId, transactionId, data) => {
   );
 };
 
-const updateTransactionStatus = (userId, transactionId, data) => {
-  return Transaction.findByIdAndUpdate(
-    {
-      owner: userId,
-      _id: transactionId,
-    },
-    data,
-    { new: true },
-  );
-};
-
-const getStatistics = (userId, { dateFrom, dateTo }) => {
-  if (!dateFrom) {
-    throw new Error('dateFrom Required');
-  }
-
-  if (!dateTo) {
-    throw new Error('dateTo Required');
+const getStatistics = (userId, { date }) => {
+  if (!date) {
+    throw new Error('date Required');
   }
 
   return Transaction.aggregate([
@@ -74,8 +83,7 @@ const getStatistics = (userId, { dateFrom, dateTo }) => {
       $match: {
         owner: new mongoose.Types.ObjectId(userId),
         date: {
-          $gte: new Date(dateFrom),
-          $lt: new Date(dateTo),
+          $gte: new Date(date),
         },
       },
     },
@@ -83,10 +91,6 @@ const getStatistics = (userId, { dateFrom, dateTo }) => {
       $project: {
         _id: 0,
         category: 1,
-        income: {
-          // Collect all transaction incomes
-          $cond: [{ $eq: ['$type', '+'] }, '$amount', 0],
-        },
         outcome: {
           // Collect all transaction outcomes
           $cond: [{ $eq: ['$type', '-'] }, '$amount', 0],
@@ -96,62 +100,16 @@ const getStatistics = (userId, { dateFrom, dateTo }) => {
     {
       $group: {
         _id: '$category',
-        totalincom: { $sum: '$income' },
-        totaloutcom: { $sum: '$outcome' },
+        outcom: { $sum: '$outcome' },
       },
     },
   ]);
 };
 
-const getBalance = (userId, { dateFrom, dateTo }) => {
-  if (!dateFrom) {
-    throw new Error('dateFrom Required');
-  }
-
-  if (!dateTo) {
-    throw new Error('dateTo Required');
-  }
-
-  return Transaction.aggregate([
-    {
-      $match: {
-        owner: new mongoose.Types.ObjectId(userId),
-        date: {
-          $gte: new Date(dateFrom),
-          $lt: new Date(dateTo),
-        },
-      },
-    },
-    {
-      $project: {
-        _id: 0,
-        type: 1,
-        income: {
-          // Collect all transaction incomes
-          $cond: [{ $eq: ['$type', '+'] }, '$amount', 0],
-        },
-        outcome: {
-          // Collect all transaction outcomes
-          $cond: [{ $eq: ['$type', '-'] }, '$amount', 0],
-        },
-      },
-    },
-    {
-      $group: {
-        _id: "userbalance",
-        totalincom: { $sum: '$income' },
-        totaloutcom: { $sum: '$outcome' },
-      },
-    },
-    {
-      $addFields: {
-        balance: {
-          $subtract: ['$totalincom', '$totaloutcom'],
-        },
-      },
-    },
-  ]);
-};
+const getCategories = () => {
+  const result = Category.find()
+  return result
+}
 
 module.exports = {
   addTransaction,
@@ -159,7 +117,6 @@ module.exports = {
   getTransactionById,
   removeTransaction,
   updateTransaction,
-  updateTransactionStatus,
   getStatistics,
-  getBalance,
+  getCategories,
 };

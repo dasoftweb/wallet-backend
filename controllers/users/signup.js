@@ -40,6 +40,7 @@ const signup = async (req, res, next) => {
         user: {
           email: newUser.email,
           name: newUser.name,
+          token: verifyToken,
         },
         message: `Please, verify your E-mail`,
       },

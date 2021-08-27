@@ -1,11 +1,8 @@
 const { transaction: service } = require('../../services');
 
-const getBalance = async (req, res, next) => {
-  const userId = req.user.id;
-  const query = req.query;
+const getCategories = async (req, res, next) => {
   try {
-    const result = await service.getBalance(userId, query);
-
+    const result = await service.getCategories();
     res.status(200).json({
       status: 'success',
       code: 200,
@@ -16,4 +13,4 @@ const getBalance = async (req, res, next) => {
   }
 };
 
-module.exports = getBalance;
+module.exports = getCategories;

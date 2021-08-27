@@ -1,8 +1,7 @@
 # wallet-backend
 
-#Balance:
-
-## GET /api/v1/statistics/balance?dateFrom=2019-01&dateTo=2021-09
+#Categories:
+## GET /api/v1/categories
 Respose:
 ```
 {
@@ -11,18 +10,39 @@ Respose:
     "data": {
         "result": [
             {
-                "_id": "userbalance",
-                "totalincom": 3000,
-                "totaloutcom": 7500,
-                "balance": -4500
+                "_id": "61291380ad91f55c123d058f",
+                "name": "Main expanses",
+                "type": "-"
+            },
+            {
+                "_id": "61291e18ad91f55c123d059e",
+                "name": "Food",
+                "type": "-"
+            },
+            {
+                "_id": "61291e72ad91f55c123d059f",
+                "name": "Car",
+                "type": "-"
+            },
+            {
+                "_id": "61292065ad91f55c123d05a0",
+                "name": "Regular Income",
+                "type": "+"
+            },
+            {
+                "_id": "6129208dad91f55c123d05a1",
+                "name": "Non Regular Income",
+                "type": "+"
             }
         ]
     }
 }
 ```
+
+
 #Statistic:
 
-## GET /api/v1/statistics?dateFrom=2019-01&dateTo=2021-09
+## GET /api/v1/statistics?date=2019-01
 Respose:
 ```
 {
@@ -32,13 +52,11 @@ Respose:
         "result": [
             {
                 "_id": "Car",
-                "totalincom": 3000,
-                "totaloutcom": 500
+                "outcom": 500
             },
             {
                 "_id": "Other",
-                "totalincom": 0,
-                "totaloutcom": 7000
+                "outcom": 7000
             }
         ]
     }
@@ -51,10 +69,10 @@ Request:
 ```
 {
     "name": "Some Alcohol",
-    "type": "-",
+    "type": "+",
     "date": "2021-08-01",
     "category": "Other",
-    "amount": "7000"
+    "amount": "3000"
 }
 ```
 Respose:
@@ -64,15 +82,16 @@ Respose:
     "code": 201,
     "data": {
         "result": {
-            "_id": "61265a0ddb8c174444eb3562",
+            "_id": "61290c064cf6ef3b54679911",
             "name": "Some Alcohol",
-            "type": "-",
+            "type": "+",
             "date": "2021-08-01T00:00:00.000Z",
             "category": "Other",
-            "amount": 7000,
-            "owner": "6123a14b17ac310c70995d4c",
-            "createdAt": "2021-08-25T14:56:13.816Z",
-            "updatedAt": "2021-08-25T14:56:13.816Z"
+            "amount": 3000,
+            "owner": "61290b884cf6ef3b54679906",
+            "balanceAfter": 3000,
+            "createdAt": "2021-08-27T16:00:06.966Z",
+            "updatedAt": "2021-08-27T16:00:06.966Z"
         }
     }
 }
@@ -88,20 +107,44 @@ Respose:
         "result": {
             "transactions": [
                 {
-                    "_id": "6123fc8746d7891d101b4b50",
-                    "name": "TEST",
-                    "type": "+",
-                    "date": "2019-01-01T00:00:00.000Z",
-                    "category": "Car",
-                    "amount": 1500,
-                    "owner": "6123a14b17ac310c70995d4c",
-                    "createdAt": "2021-08-23T19:52:39.143Z",
-                    "updatedAt": "2021-08-23T19:52:39.143Z"
+                    "_id": "61291f173a64702eb8e29917",
+                    "type": "-",
+                    "date": "2021-08-01T00:00:00.000Z",
+                    "category": "Food",
+                    "amount": 300,
+                    "comment": "burger",
+                    "owner": "6129161b985ce51bd020ef90",
+                    "balanceAfter": -300,
+                    "createdAt": "2021-08-27T17:21:27.096Z",
+                    "updatedAt": "2021-08-27T17:21:27.096Z"
                 },
-                ......
+                {
+                    "_id": "61291f293a64702eb8e2991c",
+                    "type": "-",
+                    "date": "2021-08-01T00:00:00.000Z",
+                    "category": "Car",
+                    "amount": 1000,
+                    "comment": "Repair",
+                    "owner": "6129161b985ce51bd020ef90",
+                    "balanceAfter": -1300,
+                    "createdAt": "2021-08-27T17:21:45.329Z",
+                    "updatedAt": "2021-08-27T17:21:45.329Z"
+                },
+                {
+                    "_id": "612920f9203d89537c84de81",
+                    "type": "+",
+                    "date": "2021-08-01T00:00:00.000Z",
+                    "category": "Non Regular Income",
+                    "amount": 1000,
+                    "comment": "",
+                    "owner": "6129161b985ce51bd020ef90",
+                    "balanceAfter": -300,
+                    "createdAt": "2021-08-27T17:29:29.473Z",
+                    "updatedAt": "2021-08-27T17:29:29.473Z"
+                }
             ],
             "pagination": {
-                "total": 5,
+                "total": 3,
                 "offset": null,
                 "perPage": 20,
                 "pageCount": 1,

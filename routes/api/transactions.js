@@ -14,6 +14,4 @@ router.delete('/:transactionId', authenticate, ctrl.removeTransaction);
 
 router.patch('/:transactionId', authenticate, ctrl.updateTransaction);
 
-router.patch('/:transactionId/favorite', authenticate, ctrl.updateTransactionStatus);
-
 module.exports = router;

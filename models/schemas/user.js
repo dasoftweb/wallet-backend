@@ -35,6 +35,18 @@ const userSchema = Schema(
       type: String,
       required: [true, 'Verify token is required'],
     },
+    income: {
+      type: Number,
+      default: 0,
+    },
+    outcome: {
+      type: Number,
+      default: 0,
+    },
+    balance: {
+      type: Number,
+      default: 0,
+    },
   },
   { versionKey: false, timestamps: true },
 );

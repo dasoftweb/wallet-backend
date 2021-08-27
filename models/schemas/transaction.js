@@ -16,16 +16,12 @@ const CATEGORIES = {
   HOME: 'Home',
   EDUCATION: 'Education',
   RECREATION: 'Trips',
-  OTHER_EXPENSES: 'Other',
+  REGULAR_INCOME: 'Regular Income',
+  NON_REGULAR_INCOME: 'Non Regular Income',
 };
 
 const transactionSchema = Schema(
   {
-    name: {
-      type: String,
-      minlength: [3, 'should consist of more than two characters'],
-      required: [true, 'Set name for Transaction'],
-    },
     type: {
       type: String,
       required: [true, 'Set type for Transaction'],
@@ -47,6 +43,9 @@ const transactionSchema = Schema(
     amount: {
       type: Number,
       required: true,
+    },
+    balanceAfter: {
+      type: Number,
     },
     owner: {
       type: SchemaTypes.ObjectId,
