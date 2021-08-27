@@ -224,7 +224,10 @@ Respose:
     "code": 200,
     "data": {
         "email": "XXX@XXX.XXX",
-        "name": "XXX"
+        "name": "XXX",
+        "income": 0,
+        "outcome": 200,
+        "balance": 1100
     }
 }
 ```

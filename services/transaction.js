@@ -17,7 +17,7 @@ const addTransaction = async newTransaction => {
   }
   if (type === '-') {
     incom = user.incom;
-    outcome = user.outcome;
+    outcome = user.outcome + Number(amount);
     userbalance = user.balance - Number(amount);
   }
 
